@@ -16,6 +16,7 @@ public class LicenseServiceController {
     public License getLicenses(@PathVariable("organizationId") String organizationId,
                                @PathVariable("licenseId") String licenseId) {
 
+        System.out.println("=====================");
         //return licenseService.getLicense(licenseId);
         return new License()
                 .withId(licenseId)

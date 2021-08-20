@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: section11-app
+spec:
+  selector:
+    matchLabels:
+      app: section11
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: section11
+    spec:
+      containers:
+        - name: section11-app
+          image: johncarnell/tmx-licensing-service:section11
+          ports:
+            - containerPort: 8080
+        - name: curl-app
+          image: curlimages/curl:latest
+          command: ['sh', '-c', 'echo The app is running! && sleep 3600']
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: section11-service
+spec:
+  selector:
+    app: section11
+  ports:
+    - port: 8080
+      targetPort: 8080
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: section11-ingress
+  annotations:
+    # kubernetes.io/ingress.class: nginx
+    ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            backend:
+              serviceName: section11-service
+              servicePort: 8080
