@@ -17,9 +17,6 @@ spec:
           image: johncarnell/tmx-licensing-service:section11
           ports:
             - containerPort: 8080
-        - name: curl-app
-          image: curlimages/curl:latest
-          command: ['sh', '-c', 'echo The app is running! && sleep 3600']
 
 ---
 
