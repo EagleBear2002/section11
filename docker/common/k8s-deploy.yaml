@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: section11-app
+  name: licensingservice
 spec:
   selector:
     matchLabels:
-      app: section11
+      app: licensingservice
   replicas: 3
   template:
     metadata:
       labels:
-        app: section11
+        app: licensingservice
     spec:
       containers:
-        - name: section11-app
+        - name: licensingservice
           image: johncarnell/tmx-licensing-service:section11
           ports:
             - containerPort: 8080
@@ -23,10 +23,10 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: section11-service
+  name: licensingservice
 spec:
   selector:
-    app: section11
+    app: licensingservice
   ports:
     - port: 8080
       targetPort: 8080
@@ -40,13 +40,13 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: www.mytest.com
+    - host: www.license.com
       http:
         paths:
           - pathType: Prefix
             path: /
             backend:
               service:
-                name: section11-service
+                name: licensingservice
                 port:
                   number: 8080
